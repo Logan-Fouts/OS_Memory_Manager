@@ -1,4 +1,4 @@
-package OS_Memory_Manager;
+package OS_Memory_Manager.App;
 
 import java.util.HashMap;
 
