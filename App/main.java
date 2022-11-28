@@ -6,8 +6,8 @@ public class main {
     public static void main(String args[]) {
         memmanager memSystem = new memmanager();
         inout readwrite = new inout();
-        String path = "OS_Memory_Manager/input.txt";
-        HashMap<Integer, String> commands = readwrite.read(path);
+        String inputPath = "OS_Memory_Manager/Input&output/input.txt";
+        HashMap<Integer, String> commands = readwrite.read(inputPath);
 
         memSystem.startMemManager(commands, readwrite);
     }
