@@ -19,13 +19,10 @@ public class readwrite {
                     tempCommands.setInstruction(split[0]);
                 }
                 if (split.length > 1) {
-                    tempCommands.setBlock(split[1]);
+                    tempCommands.setBlock(Integer.parseInt(split[1]));
                 }
                 if (split.length > 2) { 
-                    tempCommands.setNum2(split[2]);
-                }
-                if (split.length > 3) {
-                    tempCommands.setNum3(split[3]);
+                    tempCommands.setNum2(Integer.parseInt(split[2]));
                 }
                 commands.add(tempCommands);
             }
