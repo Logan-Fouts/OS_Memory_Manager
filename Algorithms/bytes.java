@@ -2,16 +2,19 @@ package Algorithms;
 
 import java.util.ArrayList;
 
+// Each item in the memory ararylist holds one of these byte objects.
 public class bytes {
     ArrayList<Integer> value = new ArrayList<>();
     Boolean allocated;
-    int Id;
+    int id;
+    int startBlock;
     int endBlock;
 
     public bytes() {
         for (int i = 0; i < 8; i++) value.add(0);
         allocated = false;
-        Id = -1;
+        id = -1;
+        startBlock = -1;
         endBlock = -1;
     }
 
@@ -20,7 +23,7 @@ public class bytes {
     }
 
     public void setId(int id) {
-        Id = id;
+        this.id = id;
     }
 
     public void setEndBlock(int endBlock) {
@@ -36,7 +39,7 @@ public class bytes {
     }
 
     public int getId() {
-        return Id;
+        return id;
     }
 
     public int getEndBlock() {

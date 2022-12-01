@@ -1,15 +1,15 @@
 package App;
 
+// Stores and allows for easy access to each line and elements of the instructions.
 public class commands {
     String instruction;
     int block;
-    int num2;
-    int num3;
+    int size;
 
     commands() {
         instruction = null;
         block = '\0';
-        num2 = '\0';
+        size = '\0';
     }
 
     public void setInstruction(String instruction) {
@@ -20,8 +20,8 @@ public class commands {
         this.block = block;
     }
 
-    public void setNum2(int num2) {
-        this.num2 = num2;
+    public void setSize(int size) {
+        this.size = size;
     }
 
     public String getInstruction() {
@@ -32,7 +32,7 @@ public class commands {
         return block;
     }
 
-    public int getNum2() {
-        return num2;
+    public int getSize() {
+        return size;
     }
 }

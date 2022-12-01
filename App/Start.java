@@ -9,6 +9,6 @@ public class Start {
         memmanger memmanger = new memmanger();
         ArrayList<commands> instructions = readerwriter.read(filePath);
 
-        memmanger.manageMemory(instructions);
+        memmanger.manageMemory(instructions, readerwriter);
      }
 }
