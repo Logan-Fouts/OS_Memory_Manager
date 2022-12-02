@@ -10,8 +10,7 @@ import java.util.HashMap;
 public class deallocate {
     public void doDealloate(ArrayList<bytes> memory, commands instruction, HashMap<Integer, pageentry> memoryTable) {
         // Set block entry to not allocated.
-        pageentry tempEntry = new pageentry();
-        memoryTable.put(instruction.getBlock(), tempEntry);
+        memoryTable.get(instruction.getBlock()).setAllocated(false);
         // Find the start block with the id from the instruction.
         for (int i = 0; i < memory.size(); i++) {
             if (memory.get(i).getId() == instruction.getBlock()) {
@@ -22,6 +21,8 @@ public class deallocate {
                 // Deallocate all memory blocks associated with the id.
                 for (int j = i; j < memory.get(i).getEndBlock() + 1; j++) {
                     memory.get(j).setAllocated(false);
+                    memory.get(j).setEndBlock(-1);
+                    memory.get(j).setId(-1);
                 }
                 break;
             }
