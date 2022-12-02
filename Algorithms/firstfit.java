@@ -35,7 +35,7 @@ public class firstfit {
         // Loop through memory and find first availble large enough block of memory.
         for (int i = 0; i < memory.size() - (instruction.getSize()); i++) {
             int spaceAvailable = 0;
-            for (int j = i; j < instruction.getSize() + j; j++) {
+            for (int j = i; j < instruction.getSize() + i; j++) {
                 if (memory.get(j).getAllocated()) {
                     break;
                 }

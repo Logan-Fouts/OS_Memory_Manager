@@ -14,12 +14,11 @@ public class deallocate {
         // Find the start block with the id from the instruction.
         for (int i = 0; i < memory.size(); i++) {
             if (memory.get(i).getId() == instruction.getBlock()) {
-                // Reset the start memory block to have no Id.
                 System.out.println("Deallocating..." + i + " to " + memory.get(i).getEndBlock() + "  -ID: "
                         + instruction.getBlock());
-                memory.get(i).setId(-1);
                 // Deallocate all memory blocks associated with the id.
-                for (int j = i; j < memory.get(i).getEndBlock() + 1; j++) {
+                int tempEnd = memory.get(i).getEndBlock() + 1;
+                for (int j = i; j < tempEnd; j++) {
                     memory.get(j).setAllocated(false);
                     memory.get(j).setEndBlock(-1);
                     memory.get(j).setId(-1);

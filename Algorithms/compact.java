@@ -5,6 +5,8 @@ import java.util.HashMap;
 import App.pageentry;
 
 public class compact {
+    int end;
+
     public void doCompact(ArrayList<bytes> memory, HashMap<Integer, pageentry> memoryTable) {
         System.out.println("Compacting");
         allocate allocater = new allocate();
@@ -19,20 +21,17 @@ public class compact {
                         memoryTable.get(i).setEndBlock(endBlock); // New End Position
                         memory.get(j).setEndBlock(endBlock);
                         allocater.allocater(memory, j, endBlock);
+                        end = endBlock;
                         break;
                     }
                 }
             }
         }
         // Find the first free spot in memory.
-        for (int i = 0; i < memory.size(); i++) {
-            if (!memory.get(i).getAllocated()) {
-                for (int j = i; j < memory.size(); j++) {
-                    memory.get(j).setAllocated(false);
-                    memory.get(j).setEndBlock(-1);
-                    memory.get(j).setId(-1);
-                }
-            }
+        for (int i = end; i < memory.size(); i++) {
+            memory.get(i).setAllocated(false);
+            memory.get(i).setEndBlock(-1);
+            memory.get(i).setId(-1);
         }
     }
 }

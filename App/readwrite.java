@@ -63,6 +63,6 @@ public class readwrite {
     }
 
     private void calcFragment(ArrayList<bytes> memory) {
-        // TODO  fragmentation = 1-(largest block of free memory/ total free memory)
+        // TODO fragmentation = 1-(largest block of free memory/ total free memory)
     }
 }
