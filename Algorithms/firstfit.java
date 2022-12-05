@@ -1,6 +1,7 @@
 package Algorithms;
 
 import java.util.ArrayList;
+import Algorithms.GenericAlgorithms.alloalgo;
 import Algorithms.GenericAlgorithms.allocater;
 import Algorithms.GenericAlgorithms.compacter;
 import Algorithms.GenericAlgorithms.deallocater;
@@ -8,8 +9,8 @@ import Objects.bytes;
 import Objects.command;
 import Objects.page_entry;
 
-public class firstfit {
-    public void doFirstFit(ArrayList<bytes> memory, ArrayList<page_entry> memoryTable, ArrayList<command> commands,
+public class firstfit implements alloalgo {
+    public void doAlgorithm(ArrayList<bytes> memory, ArrayList<page_entry> memoryTable, ArrayList<command> commands,
             allocater allocater) {
         deallocater deallocater = new deallocater();
         compacter compacter = new compacter();

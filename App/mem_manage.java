@@ -18,7 +18,7 @@ public class mem_manage {
         allocater allocater = new allocater();
         firstfit firstfit = new firstfit();
 
-        firstfit.doFirstFit(memory, memoryTable, commands, allocater);
+        firstfit.doAlgorithm(memory, memoryTable, commands, allocater);
         readwrite.write(memory, memoryTable);
 
 
