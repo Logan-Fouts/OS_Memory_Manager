@@ -1,8 +1,8 @@
 package App;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
+import Algorithms.bestfit;
 import Algorithms.firstfit;
 import Algorithms.GenericAlgorithms.allocater;
 import Objects.bytes;
@@ -12,15 +12,24 @@ import Objects.page_entry;
 public class mem_manage {
     public void startManage(ArrayList<page_entry> memoryTable, readwrite readwrite,
             ArrayList<command> commands) {
+        // Do each fit algorithm.
         System.out.println("\n\nStarting Memory Manager!\n~~~~~~~~~~~~~~~~~~~~~~~~");
-        ArrayList<bytes> memory = freeMemory(0, Integer.parseInt(commands.get(0).getInstruction()));
+        int memSize = Integer.parseInt(commands.get(0).getInstruction());
+        ArrayList<bytes> memory = freeMemory(0, memSize);
         commands.remove(0);
         allocater allocater = new allocater();
-        firstfit firstfit = new firstfit();
 
+        // First Fit, write, then clear memory.
+        firstfit firstfit = new firstfit();
         firstfit.doAlgorithm(memory, memoryTable, commands, allocater);
         readwrite.write(memory, memoryTable);
+        freeMemory(0, memSize);
 
+        // Best Fit, write, then clear memory.
+        bestfit bestfit = new bestfit();
+        bestfit.doAlgorithm(memory, memoryTable, commands, allocater);
+        readwrite.write(memory, memoryTable);
+        freeMemory(0, memSize);
 
         System.out.println("\n\n");
     }

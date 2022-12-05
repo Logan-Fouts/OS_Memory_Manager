@@ -31,7 +31,7 @@ public class readwrite {
             }
             reader.close();
         } catch (IOException e) {
-            System.out.println("Error: " + e);
+            System.out.println("Reading Error: " + e);
         }
         return commands;
     }
