@@ -7,8 +7,7 @@ import Objects.page_entry;
 
 public class compacter {
     public void compact(ArrayList<bytes> memory, ArrayList<page_entry> memoryTable, command command) {
-        System.out.println("Compacting");
-
+        
         for (int i = 0; i < memory.size(); i++) {
             memory.get(i).setAllocated(false);
             memory.get(i).setId('\0');

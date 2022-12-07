@@ -4,11 +4,13 @@ public class command {
     String instruction;
     int id;
     int size;
+    int index;
 
     public command() {
         instruction = null;
         id = '\0';
         size = '\0';
+        index = '\0';
     }
 
     public void setInstruction(String instruction) {
@@ -23,6 +25,10 @@ public class command {
         this.size = size;
     }
 
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
     public String getInstruction() {
         return instruction;
     }
@@ -33,5 +39,9 @@ public class command {
 
     public int getSize() {
         return size;
+    }
+
+    public int getIndex() {
+        return index;
     }
 }

@@ -2,10 +2,12 @@ package App;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import Objects.bytes;
 import Objects.command;
+import Objects.error;
 import Objects.page_entry;
 
 public class readwrite {
@@ -15,6 +17,7 @@ public class readwrite {
         try {
             String tempString;
             BufferedReader reader = new BufferedReader(new FileReader(filePath));
+            int i = 0;
             while ((tempString = reader.readLine()) != null) {
                 String split[] = tempString.split(";");
                 command tempCommands = new command();
@@ -27,7 +30,9 @@ public class readwrite {
                 if (split.length > 2) {
                     tempCommands.setSize(Integer.parseInt(split[2]));
                 }
+                tempCommands.setIndex(i);
                 commands.add(tempCommands);
+                i++;
             }
             reader.close();
         } catch (IOException e) {
@@ -36,14 +41,18 @@ public class readwrite {
         return commands;
     }
 
-    public void write(ArrayList<bytes> memory, ArrayList<page_entry> memoryTable) {
+    public void write(ArrayList<bytes> memory, ArrayList<page_entry> memoryTable, String fileName, String method, ArrayList<error> errors) {
+
+        writeFile(fileName, method);
+
+        writeFile(fileName, "Allocated Blocks");
         ArrayList<Double> sizes = new ArrayList<>();
-        System.out.println("\nAllocated Blocks\n~~~~~~~~~~~~~~~~");
         memoryTable.forEach((b) -> {
-            System.out.println(b.getId() + ";" + b.getStartAddress() + ";" + b.getEndAddress());
+            String text = b.getId() + ";" + b.getStartAddress() + ";" + b.getEndAddress();
+            writeFile(fileName, text);
         });
 
-        System.out.println("\nUn-allocated Blocks\n~~~~~~~~~~~~~~~~");
+        writeFile(fileName, "Free Blocks");
         int size = 0;
         for (int i = 0; i < memory.size(); i = i + (size + 1)) {
             size = 0;
@@ -51,14 +60,39 @@ public class readwrite {
                 size++;
             }
             if (size != 0) {
-                System.out.println(i + ";" + ((i - 1) + size));
-                sizes.add((double) (size ));
+                String text = i + ";" + ((i - 1) + size);
+                writeFile(fileName, text);
+                sizes.add((double) (size));
             }
         }
-        calcFragment(sizes);
+        calcFragment(sizes, fileName);
+
+        writeFile(fileName, "Errors");
+        for (int i = 0; i < errors.size(); i++) {
+            String text;
+            if (errors.get(i).getInstruction().charAt(0) == 'A') {
+                text = errors.get(i).getInstruction() + ";" + errors.get(i).getInstructionNum() + ";" + errors.get(i).getFailureReason();
+                writeFile(fileName, text);
+            }  else {
+                // TODO: Figure out the attempted failure shit.
+            }
+        }
     }
 
-    private void calcFragment(ArrayList<Double> sizes) {
+    public void writeFile(String fileName, String text) {
+        try {
+            String path = "InputOutput/" + fileName;
+            FileWriter w = new FileWriter(path, true);
+            w.write(text);
+            w.write("\n");
+            w.close();
+        } catch (Exception e) {
+            System.out.println("File: " + fileName + " could not be written to");
+            e.printStackTrace();
+        }
+    }
+
+    private void calcFragment(ArrayList<Double> sizes, String fileName) {
         double largestFree = -1;
         double totalFree = 0;
         for (int i = 0; i < sizes.size(); i++) {
@@ -67,6 +101,6 @@ public class readwrite {
             totalFree = totalFree + sizes.get(i);
         }
         double fragmentation = 1 - ((largestFree) / (totalFree));
-        System.out.println("\nFragmentation\n~~~~~~~~~~~~~\n" + String.format("%.6f", fragmentation));
+        writeFile(fileName, "Fragmentation\n" + String.format("%.6f", fragmentation));
     }
 }
