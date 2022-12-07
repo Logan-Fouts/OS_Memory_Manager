@@ -1,13 +1,27 @@
 package Algorithms;
 
-import App.commands;
-import App.readwrite;
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public class bestfit {
-    public void doAlgorithm(ArrayList<commands> instructions, ArrayList<bytes> memory, HashMap<Integer, Boolean> memoryTable, readwrite readerwriter) {
+import Algorithms.GenericAlgorithms.alloalgo;
+import Algorithms.GenericAlgorithms.allocater;
+import Objects.bytes;
+import Objects.command;
+import Objects.error;
+import Objects.page_entry;
+
+public class bestfit implements alloalgo {
+
+    @Override
+    public void doAlgorithm(ArrayList<bytes> memory, ArrayList<page_entry> memoryTable, ArrayList<command> commands,
+            allocater allocater, ArrayList<error> errors) {
+        // TODO Auto-generated method stub
 
     }
 
+    @Override
+    public void search(ArrayList<bytes> memory, ArrayList<page_entry> memoryTable, command command,
+            allocater allocater, ArrayList<error> errors) {
+        // TODO Auto-generated method stub
+
+    }
 }

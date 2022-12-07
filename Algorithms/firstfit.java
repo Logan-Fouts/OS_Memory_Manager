@@ -1,59 +1,73 @@
 package Algorithms;
 
-import App.commands;
-import App.pageentry;
-import App.readwrite;
 import java.util.ArrayList;
-import java.util.HashMap;
+import Algorithms.GenericAlgorithms.alloalgo;
+import Algorithms.GenericAlgorithms.allocater;
+import Algorithms.GenericAlgorithms.compacter;
+import Algorithms.GenericAlgorithms.deallocater;
+import Objects.bytes;
+import Objects.command;
+import Objects.error;
+import Objects.page_entry;
 
-public class firstfit {
-    public void doAlgorithm(ArrayList<commands> instructions, ArrayList<bytes> memory,
-            HashMap<Integer, pageentry> memoryTable, readwrite readerwriter) {
-        deallocate deallocater = new deallocate();
-        compact compacter = new compact();
-        for (int i = 1; i < instructions.size(); i++) {
-            char command = instructions.get(i).getInstruction().charAt(0);
-            if (command == 'A') {
-                search(instructions.get(i), memory, memoryTable);
-            } else if (command == 'D') {
-                deallocater.doDealloate(memory, instructions.get(i), memoryTable);
-            } else if (command == 'C') {
-                compacter.doCompact(memory, memoryTable);
-            }
-        }
-        // When all inctructions have been read and executed write to the file.
-        readerwriter.write(memory, memoryTable);
+public class firstfit implements alloalgo {
+
+    @Override
+    public void doAlgorithm(ArrayList<bytes> memory, ArrayList<page_entry> memoryTable, ArrayList<command> commands,
+            allocater allocater, ArrayList<error> errors) {
+        deallocater deallocater = new deallocater();
+        compacter compacter = new compacter();
+        commands.forEach((c) -> {
+            char command = c.getInstruction().charAt(0);
+            if (command == 'A')
+                search(memory, memoryTable, c, allocater, errors);
+            else if (command == 'D')
+                deallocater.deallocate(memory, memoryTable, c, errors);
+            else if (command == 'C')
+                compacter.compact(memory, memoryTable, c);
+            else if (command == 'O')
+                System.out.println("Im OOOOO");
+                // TODO: Create new File and write to it.
+        });
     }
 
-    private void search(commands instruction, ArrayList<bytes> memory, HashMap<Integer, pageentry> memoryTable) {
-        allocate allocater = new allocate();
-        // Check Free Memory List
-        if (memoryTable.get(instruction.getBlock()).getAllocated()) {
-            System.out.println("Requested Memory Block Is In Use!");
-            return;
-        }
-        // Loop through memory and find first availble large enough block of memory.
-        for (int i = 0; i < memory.size() - (instruction.getSize()); i++) {
-            int spaceAvailable = 0;
-            for (int j = i; j < instruction.getSize() + i; j++) {
-                if (memory.get(j).getAllocated()) {
-                    break;
+    @Override
+    public void search(ArrayList<bytes> memory, ArrayList<page_entry> memoryTable, command command,
+            allocater allocater, ArrayList<error> errors) {
+        ArrayList<Integer> freeBlocks = new ArrayList<>();
+        // Find first open block large enough for the size from the insruction.
+        for (int i = 0; i < memory.size(); i++) {
+            if (!memory.get(i).getAllocated()) {
+                int endBlock = 0;
+                for (int j = i; j < (command.getSize() + i) - 1 && !memory.get(j).getAllocated()
+                        && j < (memory.size() - 1); j++) {
+                    endBlock++;
                 }
-                spaceAvailable++;
-                if (spaceAvailable == instruction.getSize()) {
-                    System.out.println("Allocating..." + i + " to " + j + "  -ID: " + instruction.getBlock());
-                    // Update Page Entry.
-                    memoryTable.get(instruction.getBlock()).setAllocated(true);
-                    memoryTable.get(instruction.getBlock()).setStartBlock(i);
-                    memoryTable.get(instruction.getBlock()).setEndBlock(j);
-                    memory.get(i).setId(instruction.getBlock());
-                    allocater.allocater(memory, i, j);
+
+                // If large enough spot is found allocate it.
+                if (endBlock == command.getSize() - 1) {
+                    allocater.allocate(i, endBlock + i, memory, memoryTable, command, errors);
                     return;
+                } else {
+                    freeBlocks.add(endBlock);
                 }
             }
         }
-        // Not enough contiguous memory.
-        System.out.println("Not Enough Space for " + instruction.getInstruction() + ";" + instruction.getBlock() + ";"
-                + instruction.getSize());
+
+        // Adds an error if allocation cannot happen, and throws an exception.
+        try {
+            throw new Exception("Cannot Find Space To Allocate");
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Find the largest open block.
+            int largest = -1;
+            for (int i = 0; i < freeBlocks.size(); i++) {
+                if (freeBlocks.get(i) > largest) {
+                    largest = freeBlocks.get(i);
+                }
+            }
+            errors.add(new error(command.getInstruction(), command.getIndex(), largest, true));
+            System.out.println();
+        }
     }
 }

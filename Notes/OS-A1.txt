@@ -1,0 +1,48 @@
+ The Data Structure
+ ~~~~~~~~
+* RAM
+ - Nothing more than just an arraylist of byte objects
+ - Bytes are empty arrays of length 8
+* Bytes
+ - ID
+ - Allocation status
+ - Memory table will hold info about the memory block associated to it from the ID.
+* Memory Table
+ - Arraylist of page entry objects
+ - Only add to the table when a new memory block is allocated (starts empty)
+* Page Entries
+ - ID (associated with start byte of a  memory block)
+ - Start address
+ - End byte address
+
+
+ Allocation
+ ~~~~~~~
+* First set the first byte to have ID from the instruction
+* Create a new page entry with the same ID and set the start and end address
+* Use the start address from the fit algorithm and loop through memory setting all bytes to allocated stop at the end address.
+
+ Deallocation
+ ~~~~~~~
+* First set the first byte to have ID of -1
+* Use the start address from the page table to loop through the memory setting all bytes to unallocated stop and end address.
+* Remove page entry
+
+ Compaction
+ ~~~~~~~
+ // TODO
+
+ FirstFit
+ ~~~~~~~
+ * Loop through memory and find the first open byte
+  - Loop starting from the byte found from above and check if the size is big enough
+   * If the size is big enough call allocate function else continue looping
+ * If no spot found is big enough print error
+
+ BestFit
+ ~~~~~~~
+ * Loop through memory and add each hole found to a new ArrayList<page_entries> freeBlocks
+ * Loop through freeBlocks and find the block with the closest size to the instruction size
+ * Allocate the block found to be closest in size to the instruction
+ * Else no spot was big enough print error
+
