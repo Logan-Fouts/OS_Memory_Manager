@@ -41,7 +41,8 @@ public class readwrite {
         return commands;
     }
 
-    public void write(ArrayList<bytes> memory, ArrayList<page_entry> memoryTable, String fileName, String method, ArrayList<error> errors) {
+    public void write(ArrayList<bytes> memory, ArrayList<page_entry> memoryTable, String fileName, String method,
+            ArrayList<error> errors) {
 
         writeFile(fileName, method);
 
@@ -70,11 +71,26 @@ public class readwrite {
         writeFile(fileName, "Errors");
         for (int i = 0; i < errors.size(); i++) {
             String text;
+            int failed = -1;
             if (errors.get(i).getInstruction().charAt(0) == 'A') {
-                text = errors.get(i).getInstruction() + ";" + errors.get(i).getInstructionNum() + ";" + errors.get(i).getFailureReason();
+                text = errors.get(i).getInstruction() + ";" + errors.get(i).getInstructionNum() + ";"
+                        + errors.get(i).getFailureReason();
                 writeFile(fileName, text);
-            }  else {
-                // TODO: Figure out the attempted failure shit.
+            } else {
+                for (int j = 0; j < errors.size(); j++) {
+                    if (errors.get(i).getId() == errors.get(j).getId()
+                            && errors.get(i).getInstructionNum() != errors.get(j).getInstructionNum()) {
+                        failed = 1;
+                        break;
+                    }
+                }
+                if (failed == 1) {
+                    text = errors.get(i).getInstruction() + ";" + errors.get(i).getInstructionNum() + ";1";
+                    writeFile(fileName, text);
+                } else {
+                    text = errors.get(i).getInstruction() + ";" + errors.get(i).getInstructionNum() + ";0";
+                    writeFile(fileName, text);
+                }
             }
         }
     }

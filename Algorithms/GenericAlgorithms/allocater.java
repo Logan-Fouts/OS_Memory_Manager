@@ -10,20 +10,21 @@ public class allocater {
     public void allocate(int startByte, int endByte, ArrayList<bytes> memory, ArrayList<page_entry> memoryTable,
             command command, ArrayList<error> errors) {
 
-         // Check if id is already in use.
-         for (int i = 0; i < memoryTable.size(); i++) {
+        // Check if id is already in use.
+        for (int i = 0; i < memoryTable.size(); i++) {
             if (command.getId() == memoryTable.get(i).getId()) {
                 try {
                     throw new Exception("Memory Block ID In Use!");
                 } catch (Exception e) {
                     e.printStackTrace();
+                    // errors.add(new error(command.getInstruction(), command.getIndex(), '\0'));
                 }
                 return;
             }
         }
 
         System.out.println("Allocating Bytes: " + startByte + " to " + endByte);
-        
+
         // Set start bytes id to the Id from the command input and set allocation to
         // true. Also, add new entry into the memory table.
         memory.get(startByte).setId(command.getId());
@@ -35,5 +36,6 @@ public class allocater {
             memory.get(i).setAllocated(true);
             memory.get(i).setId('\0');
         }
+        System.out.println();
     }
 }

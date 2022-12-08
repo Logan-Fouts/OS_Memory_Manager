@@ -44,7 +44,7 @@ public class deallocater {
                 throw new Exception("Cannot Find and Deallocate");
             } catch (Exception e) {
                 e.printStackTrace();
-                errors.add(new error(command.getInstruction(), command.getIndex(), -1, false));
+                errors.add(new error(command.getInstruction(), command.getIndex(), '\0', command.getId()));
             }
         }
     }

@@ -4,20 +4,20 @@ public class error {
     String instruction;
     int instructionNum;
     int failureReason;
-    Boolean attemptedFailure;
+    int id;
 
     error() {
         instruction = null;
         instructionNum = '\0';
         failureReason = '\0';
-        attemptedFailure = false;
+        id = '\0';
     }
 
-    public error(String instruction, int instructionNum, int failureReason, Boolean attemptedFailure) {
+    public error(String instruction, int instructionNum, int failureReason, int id) {
         this.instruction = instruction;
         this.instructionNum = instructionNum;
         this.failureReason = failureReason;
-        this.attemptedFailure = attemptedFailure;
+        this.id = id;
     }
 
     public void setInstruction(String instruction) {
@@ -32,8 +32,8 @@ public class error {
         this.failureReason = failureReason;
     }
 
-    public void setAttemptedFailure(Boolean attemptedFailure) {
-        this.attemptedFailure = attemptedFailure;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getInstruction() {
@@ -48,8 +48,7 @@ public class error {
         return failureReason;
     }
 
-    public int getAttemptedFailure() {
-        if (attemptedFailure) return 1;
-        return 0;
+    public int getId() {
+        return id;
     }
 }

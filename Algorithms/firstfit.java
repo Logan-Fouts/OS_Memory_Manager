@@ -27,29 +27,30 @@ public class firstfit implements alloalgo {
                 compacter.compact(memory, memoryTable, c);
             else if (command == 'O')
                 System.out.println("Im OOOOO");
-                // TODO: Create new File and write to it.
+            // TODO: Create new File and write to it.
         });
     }
 
     @Override
     public void search(ArrayList<bytes> memory, ArrayList<page_entry> memoryTable, command command,
             allocater allocater, ArrayList<error> errors) {
-        ArrayList<Integer> freeBlocks = new ArrayList<>();
+        int largest = -1;
         // Find first open block large enough for the size from the insruction.
         for (int i = 0; i < memory.size(); i++) {
             if (!memory.get(i).getAllocated()) {
                 int endBlock = 0;
-                for (int j = i; j < (command.getSize() + i) - 1 && !memory.get(j).getAllocated()
-                        && j < (memory.size() - 1); j++) {
+                for (int j = i; j < (command.getSize() + (i - 1)) && !memory.get(j).getAllocated()
+                        && j < memory.size() - 1; j++) {
                     endBlock++;
+                    if (j == memory.size() - 2)
+                        endBlock++;
                 }
-
                 // If large enough spot is found allocate it.
-                if (endBlock == command.getSize() - 1) {
+                if (endBlock >= command.getSize() - 1) {
                     allocater.allocate(i, endBlock + i, memory, memoryTable, command, errors);
                     return;
-                } else {
-                    freeBlocks.add(endBlock);
+                } else if (largest < endBlock) {
+                    largest = endBlock;
                 }
             }
         }
@@ -60,14 +61,7 @@ public class firstfit implements alloalgo {
         } catch (Exception e) {
             e.printStackTrace();
             // Find the largest open block.
-            int largest = -1;
-            for (int i = 0; i < freeBlocks.size(); i++) {
-                if (freeBlocks.get(i) > largest) {
-                    largest = freeBlocks.get(i);
-                }
-            }
-            errors.add(new error(command.getInstruction(), command.getIndex(), largest, true));
-            System.out.println();
+            errors.add(new error(command.getInstruction(), command.getIndex(), largest, command.getId()));
         }
     }
 }
