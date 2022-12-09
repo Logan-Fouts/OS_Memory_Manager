@@ -33,13 +33,13 @@ public class mem_manage {
 
         // First Fit, write, then clear memory.
         firstfit firstfit = new firstfit();
-        firstfit.doAlgorithm(memory, memoryTable, commands, allocater, errors);
+        firstfit.doAlgorithm(memory, memoryTable, commands, allocater, errors, readwrite);
         readwrite.write(memory, memoryTable, outPath, "First Fit", errors);
         freeMemory(0, memSize);
 
         // Best Fit, write, then clear memory.
         // bestfit bestfit = new bestfit();
-        // bestfit.doAlgorithm(memory, memoryTable, commands, allocater);
+        // bestfit.doAlgorithm(memory, memoryTable, commands, allocater, errors, readwrite);
         // readwrite.write(memory, memoryTable, outPath);
         // freeMemory(0, memSize);
 

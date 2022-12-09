@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import Algorithms.GenericAlgorithms.alloalgo;
 import Algorithms.GenericAlgorithms.allocater;
+import App.readwrite;
 import Objects.bytes;
 import Objects.command;
 import Objects.error;
@@ -13,7 +14,7 @@ public class bestfit implements alloalgo {
 
     @Override
     public void doAlgorithm(ArrayList<bytes> memory, ArrayList<page_entry> memoryTable, ArrayList<command> commands,
-            allocater allocater, ArrayList<error> errors) {
+            allocater allocater, ArrayList<error> errors, readwrite readwrite) {
         // TODO Auto-generated method stub
 
     }

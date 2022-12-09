@@ -32,7 +32,7 @@ public class allocater {
         memoryTable.add(new page_entry(command.getId(), startByte, endByte));
 
         // Set all memory in the range to allocated and make sure they have no id.
-        for (int i = startByte; i < endByte + 1; i++) {
+        for (int i = startByte; i < endByte + 1 && i < memory.size(); i++) {
             memory.get(i).setAllocated(true);
             memory.get(i).setId('\0');
         }
