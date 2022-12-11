@@ -1,5 +1,11 @@
 package Objects;
 
+/*
+ * Defines the objects that the memory table holds.
+ * id- The id taken from the command.
+ * startAddress- The location of the start byte in the memory.
+ * endAddress- The location of the start byte in the memory.
+ */
 public class page_entry {
     int id;
     int startAddress;

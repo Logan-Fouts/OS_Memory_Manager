@@ -1,17 +1,15 @@
 package Algorithms.GenericAlgorithms;
 
-import java.util.ArrayList;
-
 import App.readwrite;
-import Objects.bytes;
-import Objects.command;
-import Objects.error;
-import Objects.page_entry;
+import java.util.ArrayList;
+import Objects.*;
 
 public interface alloalgo {
-    public void doAlgorithm(ArrayList<bytes> memory, ArrayList<page_entry> memoryTable, ArrayList<command> commands,
-    allocater allocater, ArrayList<error> errors, readwrite readwrite);
+    // Runs through all the instructions and executes them.
+    public int doAlgorithm(ArrayList<bytes> memory, ArrayList<page_entry> memoryTable, ArrayList<command> commands,
+    allocater allocater, ArrayList<error> errors, readwrite readwrite, int numFiles);
 
+    // The method of deciding where to allocate memory goes here.
     public void search(ArrayList<bytes> memory, ArrayList<page_entry> memoryTable, command command,
     allocater allocater, ArrayList<error> errors);
 }

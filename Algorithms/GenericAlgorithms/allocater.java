@@ -1,11 +1,11 @@
 package Algorithms.GenericAlgorithms;
 
 import java.util.ArrayList;
-import Objects.bytes;
-import Objects.command;
-import Objects.error;
-import Objects.page_entry;
+import Objects.*;
 
+/*
+ * Generic allocater that simply allocates the byte(s) it's passed.
+ */
 public class allocater {
     public void allocate(int startByte, int endByte, ArrayList<bytes> memory, ArrayList<page_entry> memoryTable,
             command command, ArrayList<error> errors) {
@@ -17,7 +17,6 @@ public class allocater {
                     throw new Exception("Memory Block ID In Use!");
                 } catch (Exception e) {
                     e.printStackTrace();
-                    // errors.add(new error(command.getInstruction(), command.getIndex(), '\0'));
                 }
                 return;
             }
@@ -36,6 +35,5 @@ public class allocater {
             memory.get(i).setAllocated(true);
             memory.get(i).setId('\0');
         }
-        System.out.println();
     }
 }

@@ -1,5 +1,12 @@
 package Objects;
 
+/*
+ * Object that holds the info grabbed from the input file.
+ * instruction- The actual command to run.
+ * id- The id of the memory block to do the instruction on.
+ * size- The entire amount of bytes.
+ * index- The line/position of the command in the input file.
+ */
 public class command {
     String instruction;
     int id;

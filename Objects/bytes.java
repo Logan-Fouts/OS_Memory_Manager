@@ -1,5 +1,10 @@
 package Objects;
 
+/*
+ * This defines the byte object held in the memory ArrayList.
+ * allocated- The state of allocation of the specific byte.
+ * id- The id saved from the input command.
+ */
 public class bytes {
     Boolean allocated;
     int id;

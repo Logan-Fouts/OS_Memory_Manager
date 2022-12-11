@@ -1,5 +1,12 @@
 package Objects;
 
+/*
+ * Object that holds info about errors that can occur.
+ * instruction- The command from the instruction that failed.
+ * instuctionNum- The index of the instuction that failed.
+ * failureReason- Either the size of largest block of memory or the state if the allocation of the id failed previously.
+ * id- The id of the failed command from the instuction.
+ */
 public class error {
     String instruction;
     int instructionNum;
