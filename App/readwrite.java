@@ -5,13 +5,14 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import Objects.bytes;
-import Objects.command;
-import Objects.error;
-import Objects.page_entry;
+import Objects.*;
 
+/*
+ * Handles all the writing to the file(s).
+ */
 public class readwrite {
 
+    // Read input file and store into an ArrayList.
     public ArrayList<command> read(String filePath) {
         ArrayList<command> commands = new ArrayList<command>();
         try {
@@ -41,10 +42,13 @@ public class readwrite {
         return commands;
     }
 
-    public void write(ArrayList<bytes> memory, ArrayList<page_entry> memoryTable, String fileName, String method, ArrayList<error> errors) {
+    // Tells the file writer what to write and where.
+    public void write(ArrayList<bytes> memory, ArrayList<page_entry> memoryTable, String fileName, String method,
+            ArrayList<error> errors) {
 
         writeFile(fileName, method);
 
+        // Prints all the allocated blocks from the memory.
         writeFile(fileName, "Allocated Blocks");
         ArrayList<Double> sizes = new ArrayList<>();
         memoryTable.forEach((b) -> {
@@ -52,6 +56,7 @@ public class readwrite {
             writeFile(fileName, text);
         });
 
+        // Finds and prints all free blocks in the memory.
         writeFile(fileName, "Free Blocks");
         int size = 0;
         for (int i = 0; i < memory.size(); i = i + (size + 1)) {
@@ -67,18 +72,36 @@ public class readwrite {
         }
         calcFragment(sizes, fileName);
 
+        // Prints all the errors from the error arraylist.
         writeFile(fileName, "Errors");
         for (int i = 0; i < errors.size(); i++) {
             String text;
-            if (errors.get(i).getInstruction().charAt(0) == 'A') {
-                text = errors.get(i).getInstruction() + ";" + errors.get(i).getInstructionNum() + ";" + errors.get(i).getFailureReason();
+            int failed = -1;
+            char command = errors.get(i).getInstruction().charAt(0);
+            if (command == 'A') {
+                text = errors.get(i).getInstruction() + ";" + errors.get(i).getInstructionNum() + ";"
+                        + errors.get(i).getFailureReason();
                 writeFile(fileName, text);
-            }  else {
-                // TODO: Figure out the attempted failure shit.
+            } else {
+                for (int j = 0; j < errors.size(); j++) {
+                    if (errors.get(i).getId() == errors.get(j).getId()
+                            && errors.get(i).getInstructionNum() != errors.get(j).getInstructionNum()) {
+                        failed = 1;
+                        break;
+                    }
+                }
+                if (failed == 1) {
+                    text = errors.get(i).getInstruction() + ";" + errors.get(i).getInstructionNum() + ";1";
+                    writeFile(fileName, text);
+                } else {
+                    text = errors.get(i).getInstruction() + ";" + errors.get(i).getInstructionNum() + ";0";
+                    writeFile(fileName, text);
+                }
             }
         }
     }
 
+    // Creates and actually writes to the file.
     public void writeFile(String fileName, String text) {
         try {
             String path = "InputOutput/" + fileName;
@@ -92,6 +115,7 @@ public class readwrite {
         }
     }
 
+    // Calculates the fragmentation of the memory, then prints it.
     private void calcFragment(ArrayList<Double> sizes, String fileName) {
         double largestFree = -1;
         double totalFree = 0;
