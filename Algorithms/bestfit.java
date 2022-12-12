@@ -11,7 +11,7 @@ public class bestfit implements alloalgo {
     @Override
     public int doAlgorithm(ArrayList<bytes> memory, ArrayList<page_entry> memoryTable, ArrayList<command> commands,
             allocater allocater, ArrayList<error> errors, readwrite readwrite, int numFiles) {
-                
+
         deallocater deallocater = new deallocater();
         compacter compacter = new compacter();
 
@@ -25,7 +25,7 @@ public class bestfit implements alloalgo {
             else if (command == 'C')
                 compacter.compact(memory, memoryTable, commands.get(i));
             else if (command == 'O') {
-                String fileName =  "input.out" + j;
+                String fileName = "input.out" + j;
                 readwrite.write(memory, memoryTable, fileName, "Best Fit", errors);
                 j++;
             }
@@ -57,20 +57,21 @@ public class bestfit implements alloalgo {
             if (freeBlocks.get(i).getEndAddress() - freeBlocks.get(i).getStartAddress() + 1 >= command.getSize()) {
                 enoughSpace = true;
             }
-            if (freeBlocks.get(i).getEndAddress() - freeBlocks.get(i).getStartAddress() + 1  > largest) largest = freeBlocks.get(i).getEndAddress() - freeBlocks.get(i).getStartAddress() + 1;
+            if (freeBlocks.get(i).getEndAddress() - freeBlocks.get(i).getStartAddress() + 1 > largest)
+                largest = freeBlocks.get(i).getEndAddress() - freeBlocks.get(i).getStartAddress() + 1;
         }
 
-         // Adds an error if allocation cannot happen, and throws an exception.
+        // Adds an error if allocation cannot happen, and throws an exception.
         if (!enoughSpace) {
-        try {
-            throw new Exception("Cannot Find Space To Allocate");
-        } catch (Exception e) {
-            e.printStackTrace();
-            errors.add(new error(command.getInstruction(), command.getIndex(), largest, command.getId()));
-            return;
+            try {
+                throw new Exception("Cannot Find Space To Allocate");
+            } catch (Exception e) {
+                e.printStackTrace();
+                errors.add(new error(command.getInstruction(), command.getIndex(), largest, command.getId()));
+                return;
+            }
         }
-        }
-        
+
         int distance = 1000000;
         page_entry blockToAllocate = new page_entry();
         for (int i = 0; i < freeBlocks.size(); i++) {
@@ -81,6 +82,7 @@ public class bestfit implements alloalgo {
                 blockToAllocate = freeBlocks.get(i);
             }
         }
-        allocater.allocate(blockToAllocate.getStartAddress(), (blockToAllocate.getStartAddress() + command.getSize() - 1), memory, memoryTable, command, errors);
+        allocater.allocate(blockToAllocate.getStartAddress(),
+                (blockToAllocate.getStartAddress() + command.getSize() - 1), memory, memoryTable, command, errors);
     }
 }
