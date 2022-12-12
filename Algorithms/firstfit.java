@@ -24,7 +24,7 @@ public class firstfit implements alloalgo {
             else if (command == 'C')
                 compacter.compact(memory, memoryTable, commands.get(i));
             else if (command == 'O') {
-                String fileName =  "input.out" + j;
+                String fileName = "input.out" + j;
                 readwrite.write(memory, memoryTable, fileName, "First Fit", errors);
                 j++;
             }

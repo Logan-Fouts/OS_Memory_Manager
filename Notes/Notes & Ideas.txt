@@ -1,5 +1,5 @@
  The Data Structure
- ~~~~~~~~
+ ~~~~~~~~~~~~~~~~~~~~
 * RAM
  - Nothing more than just an arraylist of byte objects
  - Bytes are empty arrays of length 8
@@ -14,8 +14,15 @@
  - ID (associated with start byte of a  memory block)
  - Start address
  - End byte address
+* Errors
+ - ArrayList of errors
+ - Instruction type that it failed on
+ - The index of the command that failed from the uinput file
+ - Either the size of largest block of memory or the state if the allocation of the id failed previously.
+ - The id of the failed command from the instuction.
 
-
+Algorithms
+~~~~~~~~~~~~~~~~~~~~
  Allocation
  ~~~~~~~
 * First set the first byte to have ID from the instruction
@@ -30,7 +37,8 @@
 
  Compaction
  ~~~~~~~
- // TODO
+ * Clear memory
+ * Loop through the memory table and allocate each block at the earliest byte in the memory.
 
  FirstFit
  ~~~~~~~
@@ -43,6 +51,12 @@
  ~~~~~~~
  * Loop through memory and add each hole found to a new ArrayList<page_entries> freeBlocks
  * Loop through freeBlocks and find the block with the closest size to the instruction size
- * Allocate the block found to be closest in size to the instruction
- * Else no spot was big enough print error
+ * Allocate the block found to be (closest) in size to the instruction
+ * Else no spot was big enough, print error
 
+ WorstFit
+ ~~~~~~~
+ * Loop through memory and add each hole found to a new ArrayList<page_entries> freeBlocks
+ * Loop through freeBlocks and find the block with the closest size to the instruction size
+ * Allocate the block found to be (farthest) in size to the instruction
+ * Else no spot was big enough, print error

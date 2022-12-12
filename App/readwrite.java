@@ -99,6 +99,8 @@ public class readwrite {
                 }
             }
         }
+        // Adds a space in the output file.
+        writeFile(fileName, "");
     }
 
     // Creates and actually writes to the file.
