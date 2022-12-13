@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Member;
 import java.util.ArrayList;
 import Objects.*;
 
@@ -52,8 +53,14 @@ public class readwrite {
         writeFile(fileName, "Allocated Blocks");
         ArrayList<Double> sizes = new ArrayList<>();
         memoryTable.forEach((b) -> {
-            String text = b.getId() + ";" + b.getStartAddress() + ";" + b.getEndAddress();
-            writeFile(fileName, text);
+            if (b.getEndAddress() == memory.size()) {
+                String text = b.getId() + ";" + b.getStartAddress() + ";" + (b.getEndAddress() - 1);
+                writeFile(fileName, text);
+            } else {
+                String text = b.getId() + ";" + b.getStartAddress() + ";" + b.getEndAddress();
+                writeFile(fileName, text);
+            }
+
         });
 
         // Finds and prints all free blocks in the memory.
