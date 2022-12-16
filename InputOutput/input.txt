@@ -1,12 +1,1 @@
-1000
-A;0;100
-A;1;100
-O
-A;2;500
-D;1
-A;3;200
-D;2
-O
-A;4;1500
-D;4
-D;5
+//TODO: Delete this line and put input commands here
