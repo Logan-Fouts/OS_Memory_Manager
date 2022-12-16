@@ -27,12 +27,16 @@ public class mem_manage {
         readwrite.write(memory, memoryTable, "input.out", "First Fit", errors);
         memory = freeMemory(0, memSize, memoryTable, errors);
 
+        numFiles = 0;
+
         // Best Fit, write, then clear memory.
         System.out.println("\nBestFit:");
         bestfit bestfit = new bestfit();
         numFiles = bestfit.doAlgorithm(memory, memoryTable, commands, allocater, errors, readwrite, numFiles);
         readwrite.write(memory, memoryTable, "input.out", "Best Fit", errors);
         memory = freeMemory(0, memSize, memoryTable, errors);
+
+        numFiles = 0;
 
         // Worst Fit then write.
         System.out.println("WorstFit:");
