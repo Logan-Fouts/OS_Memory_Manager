@@ -105,6 +105,7 @@ public class readwrite {
                 }
             }
         }
+        if(errors.size() == 0) writeFile(fileName, "None");
         // Adds a space in the output file.
         writeFile(fileName, "");
     }
