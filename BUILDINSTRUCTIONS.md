@@ -1,0 +1,21 @@
+                .-"```"-.
+               /_______; \
+              (_________)\|
+              / / a a \ \(_)
+             / ( \___/ ) \
+  ________ooo\__\_____/__/__________
+ /                                  \
+| Welcome To The Build Instructions! |
+ \_______________________ooo________/
+            /           \
+           /:.:.:.:.:.:.:\
+               |  |  |
+               \==|==/
+               /-'Y'-\
+              (__/ \__)
+* To build the project first download the zip
+* Unzip the project and open it with your IDE
+* To add your input instrucions paste them into ./InputOutput/input.txt file
+* Make sure there are no other lines such as blank lines, then save the file
+* Run the code 
+* Output files will be generated in the InputOutput folder
