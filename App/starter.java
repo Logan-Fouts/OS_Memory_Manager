@@ -25,6 +25,8 @@ public class starter {
             temp.delete();
         }
 
+        if(commands.size() == 0) return;
+
         memManager.startManage(memoryTable, readwrite, commands, errors);
     }
 }

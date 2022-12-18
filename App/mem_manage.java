@@ -21,7 +21,7 @@ public class mem_manage {
         int numFiles = 0;
 
         // First Fit, write, then clear memory and memorytable.
-        System.out.println("\nFirstFit:");
+        System.out.println("FirstFit:");
         firstfit firstfit = new firstfit();
         numFiles = firstfit.doAlgorithm(memory, memoryTable, commands, allocater, errors, readwrite, numFiles);
         readwrite.write(memory, memoryTable, "input.out", "First Fit", errors);
@@ -30,7 +30,7 @@ public class mem_manage {
         numFiles = 0;
 
         // Best Fit, write, then clear memory.
-        System.out.println("\nBestFit:");
+        System.out.println("BestFit:");
         bestfit bestfit = new bestfit();
         numFiles = bestfit.doAlgorithm(memory, memoryTable, commands, allocater, errors, readwrite, numFiles);
         readwrite.write(memory, memoryTable, "input.out", "Best Fit", errors);
