@@ -18,7 +18,7 @@ public class mem_manage {
         allocater allocater = new allocater();
 
         // Do each fit algorithm.
-        int numFiles = 0;
+        int numFiles = 1;
 
         // First Fit, write, then clear memory and memorytable.
         System.out.println("FirstFit:");
@@ -27,7 +27,7 @@ public class mem_manage {
         readwrite.write(memory, memoryTable, "input.out", "First Fit", errors);
         memory = freeMemory(0, memSize, memoryTable, errors);
 
-        numFiles = 0;
+        numFiles = 1;
 
         // Best Fit, write, then clear memory.
         System.out.println("BestFit:");
@@ -36,7 +36,7 @@ public class mem_manage {
         readwrite.write(memory, memoryTable, "input.out", "Best Fit", errors);
         memory = freeMemory(0, memSize, memoryTable, errors);
 
-        numFiles = 0;
+        numFiles = 1;
 
         // Worst Fit then write.
         System.out.println("WorstFit:");

@@ -12,14 +12,14 @@ public class starter {
         mem_manage memManager = new mem_manage();
         ArrayList<page_entry> memoryTable = new ArrayList<>();
         readwrite readwrite = new readwrite();
-        ArrayList<command> commands = readwrite.read("InputOutput/input.txt");
+        ArrayList<command> commands = readwrite.read("InputOutput/input.in");
         ArrayList<error> errors = new ArrayList<>();
 
         // Remove existing output file(s).
         String outPath = "input.out";
         File f = new File("InputOutput/" + outPath);
         f.delete();
-        for (int i = 0; i < 100; i++) { // Please don't have more than 100 output files ;(.
+        for (int i = 1; i < 100; i++) { // Please don't have more than 100 output files ;(.
             String path = "input.out" + i;
             File temp = new File("InputOutput/" + path);
             temp.delete();
