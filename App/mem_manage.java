@@ -38,7 +38,7 @@ public class mem_manage {
 
         numFiles = 1;
 
-        // Worst Fit then write.
+        // // Worst Fit then write.
         System.out.println("WorstFit:");
         worstfit worstfit = new worstfit();
         numFiles = worstfit.doAlgorithm(memory, memoryTable, commands, allocater, errors, readwrite, numFiles);

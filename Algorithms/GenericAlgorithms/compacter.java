@@ -8,30 +8,49 @@ import Objects.*;
  */
 public class compacter {
     public void compact(ArrayList<bytes> memory, ArrayList<page_entry> memoryTable, command command) {
+        for (int f = 0; f < memory.size(); f++) {
+            int firstUnallocated = -1;
+            int firstAllocated = -1;
+            for (int i = 0; i < memory.size(); i++) {
+                if (!memory.get(i).getAllocated()) {
+                    firstUnallocated = i;
+                    break;
+                }
+            }
+            for (int i = firstUnallocated + 1; i < memory.size(); i++) {
+                if (memory.get(i).getAllocated()) {
+                    firstAllocated = i;
+                    break;
+                }
+            }
+            if (firstUnallocated == -1 || firstAllocated == -1)
+                return;
+            for (int i = 0; i < memoryTable.size(); i++) {
+                if (memoryTable.get(i).getId() == memory.get(firstAllocated).getId()) {
+                    System.out.println("Compacting");
+                    int size = memoryTable.get(i).getEndAddress() - memoryTable.get(i).getStartAddress() + 1;
 
-        // Clear the memory before compacting. Memory table holds the info about the memory blocks.
-        for (int i = 0; i < memory.size(); i++) {
-            memory.get(i).setAllocated(false);
-            memory.get(i).setId('\0');
-        }
-
-        // For each memory block find the first free spot and allocate it to a memory block.
-        for (int i = 0; i < memoryTable.size(); i++) {
-            for (int j = i; j < memory.size(); j++) {
-                if (!memory.get(j).getAllocated()) {
-                    int newEnd = (memoryTable.get(i).getEndAddress() - memoryTable.get(i).getStartAddress()) + j;
-                    if (newEnd >= memory.size())
-                        newEnd = memory.size() - 1;
-                    // Set the first bytes info then loop and set all bytes to allocated.
-                    memoryTable.get(i).setStartAddress(j);
-                    memoryTable.get(i).setEndAddress(newEnd);
-                    System.out.println("Moving Block ID: " + memoryTable.get(i).getId() + " to byte " + j);
-                    memory.get(j).setId(command.getId());
-                    memory.get(j).setAllocated(true);
-                    for (int q = j + 1; q < newEnd + 1; q++) {
-                        memory.get(q).setAllocated(true);
-                        memory.get(q).setId('\0');
+                    System.out.println("Deallocating " + memoryTable.get(i).getStartAddress() + " To "
+                            + (memoryTable.get(i).getEndAddress()));
+                    for (int q = memoryTable.get(i).getStartAddress(); q < memoryTable.get(i).getEndAddress() + 1
+                            && q < memory.size(); q++) {
+                        memory.get(q).setAllocated(false);
+                        memory.get(q).setId(-1);
                     }
+
+                    memoryTable.get(i).setStartAddress(firstUnallocated);
+                    memoryTable.get(i).setEndAddress(size + firstUnallocated - 1);
+
+                    memory.get(firstUnallocated).setAllocated(true);
+                    memory.get(firstUnallocated).setId(memoryTable.get(i).getId());
+
+                    System.out.println("Allocating " + firstUnallocated + " To " + (size + firstUnallocated - 1));
+                    for (int m = firstUnallocated + 1; m < size + firstUnallocated && m < memory.size(); m++) {
+                        memory.get(m).setAllocated(true);
+                        memory.get(m).setId(-1);
+                    }
+
+                    System.out.println("Done Compacting");
                     break;
                 }
             }

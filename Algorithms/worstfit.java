@@ -69,16 +69,20 @@ public class worstfit implements alloalgo {
             }
         }
 
-        int distance = 0;
+        int distance = -90000;
         page_entry blockToAllocate = new page_entry();
+        blockToAllocate.setStartAddress(900000000);
         for (int i = 0; i < freeBlocks.size(); i++) {
             int tempSize = freeBlocks.get(i).getEndAddress() - freeBlocks.get(i).getStartAddress() + 1;
             int tempDistance = Math.abs(tempSize - command.getSize());
-            if (tempDistance >= distance && tempSize >= command.getSize()) {
+            if (tempDistance > distance && tempSize >= command.getSize()) {
                 distance = tempDistance;
                 blockToAllocate = freeBlocks.get(i);
             }
         }
+        if (blockToAllocate.getStartAddress() == 900000000) {
+            return;
+        } 
         allocater.allocate(blockToAllocate.getStartAddress(),
                 (blockToAllocate.getStartAddress() + command.getSize() - 1), memory, memoryTable, command, errors);
     }

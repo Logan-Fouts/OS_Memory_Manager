@@ -37,8 +37,12 @@ Algorithms
 
  Compaction
  ~~~~~~~
- * Clear memory
- * Loop through the memory table and allocate each block at the earliest byte in the memory.
+* Loop through memory and find first unallocated byte. (This should be the new start address)
+* Loop and find the first allocated byte starting and the unallocated byte + 1. (This will be the block to move)
+* Find the correct entry in the page table.
+* Clear out that block of memory from its original spot. (Set id to -1 and allocated to false)
+* Allocate the new block for that memory. (Start address from loop 1 --> End address derived from memory table)
+* Update page table entry with new start and end addresses.  
 
  FirstFit
  ~~~~~~~

@@ -11,7 +11,7 @@ public class bytes {
 
     public bytes() {
         allocated = false;
-        id = '\0';
+        id = -1;
     }
 
     public void setAllocated(Boolean allocated) {
